@@ -45,7 +45,9 @@ namespace DevFreelas.Application.Services.Implementations
 
         public void Finish(int id)
         {
-            throw new NotImplementedException();
+            var project = _dbContex.Projects.SingleOrDefault(p => p.Id == id);
+
+            project.Finish();
         }
 
         public List<ProjectViewModel> GetAll(string query)
@@ -53,7 +55,7 @@ namespace DevFreelas.Application.Services.Implementations
             var project = _dbContex.Projects;
 
             var projectsViewModel = project
-                .Select(p => new ProjectViewModel(p.Title, p.CreatedAt))
+                .Select(p => new ProjectViewModel(p.Id, p.Title, p.CreatedAt))
                 .ToList();
 
             return projectsViewModel;
@@ -62,6 +64,8 @@ namespace DevFreelas.Application.Services.Implementations
         public ProjectDetailsViewModel GetById(int id)
         {
             var project = _dbContex.Projects.SingleOrDefault(p => p.Id == id);
+
+            if (project == null) return null;
 
             var projectDetailsViewModel = new ProjectDetailsViewModel(
                 project.Id,
@@ -78,12 +82,16 @@ namespace DevFreelas.Application.Services.Implementations
 
         public void Start(int id)
         {
-            throw new NotImplementedException();
+            var project = _dbContex.Projects.SingleOrDefault(p => p.Id == id);
+
+            project.Start();
         }
 
         public void Update(UpdateProjectInputModel inputModel)
         {
-            throw new NotImplementedException();
+            var project = _dbContex.Projects.SingleOrDefault(p => p.Id == inputModel.Id);
+
+            project.Update(inputModel.Title, inputModel.Description, inputModel.TotalCost);
         }
     }
 }

@@ -13,7 +13,7 @@ namespace DevFreelas.Application.Services.Interfaces
         //methods from ProjectsController
         List<ProjectViewModel> GetAll(string query);
 
-        ProjectDetailsViewModel GetById(string query);
+        ProjectDetailsViewModel GetById(int id);
 
         int Create(NewProjectInputModel inputModel);
 

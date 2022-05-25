@@ -1,4 +1,7 @@
 using DevFreelas.API.Models;
+using DevFreelas.Application.Services.Implementations;
+using DevFreelas.Application.Services.Interfaces;
+using DevFreelas.Infrastructure.Persistence;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.HttpsPolicy;
@@ -29,6 +32,10 @@ namespace DevFreelas.API
         {
 
             services.Configure<OpeningTimeOption>(Configuration.GetSection("OpeninTIme"));
+
+            services.AddSingleton<DevFreelasDbContext>();
+
+            services.AddScoped<IProjectService, ProjectService>();
 
             services.AddControllers();
             services.AddSwaggerGen(c =>
