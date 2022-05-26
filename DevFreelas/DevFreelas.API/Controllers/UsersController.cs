@@ -36,7 +36,7 @@ namespace DevFreelas.API.Controllers
         {
             var id = _userService.Create(inputModel);
 
-            return CreatedAtAction(nameof(GetById), new { id = id}, inputModel);
+            return CreatedAtAction(nameof(GetById), new { id = id }, inputModel);
         }
 
         [HttpPut("{id}/login")]

@@ -25,6 +25,7 @@ namespace DevFreelas.Application.Services.Implementations
             var project = new Projects(inputModel.Title, inputModel.Description, inputModel.IdClient, inputModel.IdFreelancer, (int)inputModel.TotalCost);
 
             _dbContex.Projects.Add(project);
+            _dbContex.SaveChanges();
 
             return project.Id;
         }
@@ -34,6 +35,7 @@ namespace DevFreelas.Application.Services.Implementations
             var comment = new ProjectComment(inputModel.Content, inputModel.IdProject, inputModel.IdUser);
 
             _dbContex.ProjectComments.Add(comment);
+            _dbContex.SaveChanges();
         }
 
         public void Delete(int id)
@@ -41,6 +43,7 @@ namespace DevFreelas.Application.Services.Implementations
             var project = _dbContex.Projects.SingleOrDefault(p => p.Id == id);
 
             project.Cancel();
+            _dbContex.SaveChanges();
         }
 
         public void Finish(int id)
@@ -48,6 +51,7 @@ namespace DevFreelas.Application.Services.Implementations
             var project = _dbContex.Projects.SingleOrDefault(p => p.Id == id);
 
             project.Finish();
+            _dbContex.SaveChanges();
         }
 
         public List<ProjectViewModel> GetAll(string query)
@@ -85,6 +89,7 @@ namespace DevFreelas.Application.Services.Implementations
             var project = _dbContex.Projects.SingleOrDefault(p => p.Id == id);
 
             project.Start();
+            _dbContex.SaveChanges();
         }
 
         public void Update(UpdateProjectInputModel inputModel)
@@ -92,6 +97,7 @@ namespace DevFreelas.Application.Services.Implementations
             var project = _dbContex.Projects.SingleOrDefault(p => p.Id == inputModel.Id);
 
             project.Update(inputModel.Title, inputModel.Description, (int)inputModel.TotalCost);
+            _dbContex.SaveChanges();
         }
     }
 }
