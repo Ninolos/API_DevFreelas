@@ -22,7 +22,7 @@ namespace DevFreelas.Application.Services.Implementations
 
         public int Create(NewProjectInputModel inputModel)
         {
-            var project = new Projects(inputModel.Title, inputModel.Description, inputModel.IdClient, inputModel.IdFreelancer, inputModel.TotalCost);
+            var project = new Projects(inputModel.Title, inputModel.Description, inputModel.IdClient, inputModel.IdFreelancer, (int)inputModel.TotalCost);
 
             _dbContex.Projects.Add(project);
 
@@ -91,7 +91,7 @@ namespace DevFreelas.Application.Services.Implementations
         {
             var project = _dbContex.Projects.SingleOrDefault(p => p.Id == inputModel.Id);
 
-            project.Update(inputModel.Title, inputModel.Description, inputModel.TotalCost);
+            project.Update(inputModel.Title, inputModel.Description, (int)inputModel.TotalCost);
         }
     }
 }

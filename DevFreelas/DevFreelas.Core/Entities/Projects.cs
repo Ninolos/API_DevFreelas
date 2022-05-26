@@ -9,7 +9,7 @@ namespace DevFreelas.Core.Entities
 {
     public class Projects : BaseEntity
     {
-        public Projects(string title, string description, int idClient, int idFreelancer, decimal totalCost)
+        public Projects(string title, string description, int idClient, int idFreelancer, int totalCost)
         {
             Title = title;
             Description = description;
@@ -34,7 +34,7 @@ namespace DevFreelas.Core.Entities
 
         public User Freelancer { get; private set; }
 
-        public decimal TotalCost { get; private set; }
+        public int TotalCost { get; private set; }
 
         public DateTime CreatedAt { get; private set; }
 
@@ -73,7 +73,7 @@ namespace DevFreelas.Core.Entities
             }
         }
 
-        public void Update(string title, string description, decimal totalCost)
+        public void Update(string title, string description, int totalCost)
         {
             Title = title;
             Description = description;
