@@ -14,6 +14,6 @@ namespace DevFreelas.Application.InputModels
 
         public string Description { get; set; }
 
-        public decimal TotalCost { get; set; }
+        public int TotalCost { get; set; }
     }
 }

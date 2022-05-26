@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace DevFreelas.API.Controllers
 {
-    public class SkillsController : Controller
+    public class SkillsController : ControllerBase
     {
         private readonly ISkillService _skillService;
 
@@ -16,10 +16,11 @@ namespace DevFreelas.API.Controllers
             _skillService = skillService;
         }
 
+        [HttpGet]
         public IActionResult Get()
         {
             var skills = _skillService.GetAll();
-            return View();
+            return Ok();
         }
     }
 }

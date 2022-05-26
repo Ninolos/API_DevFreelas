@@ -8,6 +8,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using Microsoft.EntityFrameworkCore;
 
 namespace DevFreelas.Application.Services.Implementations
 {
@@ -22,7 +23,7 @@ namespace DevFreelas.Application.Services.Implementations
 
         public int Create(NewProjectInputModel inputModel)
         {
-            var project = new Projects(inputModel.Title, inputModel.Description, inputModel.IdClient, inputModel.IdFreelancer, (int)inputModel.TotalCost);
+            var project = new Projects(inputModel.Title, inputModel.Description, inputModel.IdClient, inputModel.IdFreelancer, inputModel.TotalCost);
 
             _dbContex.Projects.Add(project);
             _dbContex.SaveChanges();
@@ -67,7 +68,10 @@ namespace DevFreelas.Application.Services.Implementations
 
         public ProjectDetailsViewModel GetById(int id)
         {
-            var project = _dbContex.Projects.SingleOrDefault(p => p.Id == id);
+            var project = _dbContex.Projects
+                .Include(p => p.Client)
+                .Include(p => p.Freelancer)
+                .SingleOrDefault(p => p.Id == id);
 
             if (project == null) return null;
 
@@ -77,7 +81,9 @@ namespace DevFreelas.Application.Services.Implementations
                 project.Description,
                 project.TotalCost,
                 project.StartedAt,
-                project.FinishedAt
+                project.FinishedAt,
+                project.Client.FullName,
+                project.Freelancer.FullName
                 
                 );
 
@@ -96,7 +102,7 @@ namespace DevFreelas.Application.Services.Implementations
         {
             var project = _dbContex.Projects.SingleOrDefault(p => p.Id == inputModel.Id);
 
-            project.Update(inputModel.Title, inputModel.Description, (int)inputModel.TotalCost);
+            project.Update(inputModel.Title, inputModel.Description, inputModel.TotalCost);
             _dbContex.SaveChanges();
         }
     }

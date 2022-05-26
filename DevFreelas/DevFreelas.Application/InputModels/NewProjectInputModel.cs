@@ -16,6 +16,6 @@ namespace DevFreelas.Application.InputModels
 
         public int IdFreelancer { get; set; }
 
-        public decimal TotalCost { get; set; }
+        public int TotalCost { get; set; }
     }
 }

@@ -10,7 +10,7 @@ using System.Threading.Tasks;
 namespace DevFreelas.API.Controllers
 {
     [Route("api/users")]
-    public class UsersController : Controller
+    public class UsersController : ControllerBase
     {
         private readonly IUserService _userService;
 
