@@ -8,7 +8,7 @@ namespace DevFreelas.Application.ViewModels
 {
     public class ProjectDetailsViewModel
     {
-        public ProjectDetailsViewModel(int id, string title, string description, int totalCost, DateTime? startedAt, DateTime? finishedAt, string clientFullName, string FreelancerFullName)
+        public ProjectDetailsViewModel(int id, string title, string description, int totalCost, DateTime? startedAt, DateTime? finishedAt, string clientFullName, string freelancerFullName)
         {
             Id = id;
             Title = title;
@@ -17,7 +17,7 @@ namespace DevFreelas.Application.ViewModels
             StartedAt = startedAt;
             FinishedAt = finishedAt;
             ClientFullName = clientFullName;
-            FreelancerFullName = FreelancerFullName;
+            FreelancerFullName = freelancerFullName;
         }
 
         public int Id { get; private set; }
