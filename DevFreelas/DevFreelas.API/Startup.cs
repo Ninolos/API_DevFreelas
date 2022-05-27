@@ -1,7 +1,9 @@
 using DevFreelas.API.Models;
+using DevFreelas.Application.Commands.CreateProjects;
 using DevFreelas.Application.Services.Implementations;
 using DevFreelas.Application.Services.Interfaces;
 using DevFreelas.Infrastructure.Persistence;
+using MediatR;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.HttpsPolicy;
@@ -40,6 +42,9 @@ namespace DevFreelas.API
             services.AddScoped<IProjectService, ProjectService>();
 
             services.AddControllers();
+
+            services.AddMediatR(typeof(CreateProjectCommand));
+
             services.AddSwaggerGen(c =>
             {
                 c.SwaggerDoc("v1", new OpenApiInfo { Title = "DevFreelas.API", Version = "v1" });
