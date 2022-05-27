@@ -9,24 +9,27 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.Configuration;
 
 namespace DevFreelas.Application.Services.Implementations
 {
     public class ProjectService : IProjectService
     {
-        private readonly DevFreelasDbContext _dbContex;
+        private readonly DevFreelasDbContext _dbContext;
+        private readonly string _connectionString;
 
-        public ProjectService(DevFreelasDbContext dbContext)
+        public ProjectService(DevFreelasDbContext dbContext, IConfiguration configuration)
         {
-            _dbContex = dbContext;
+            _dbContext = dbContext;
+            _connectionString = configuration.GetConnectionString("DevFreelasCs");
         }
 
         public int Create(NewProjectInputModel inputModel)
         {
             var project = new Projects(inputModel.Title, inputModel.Description, inputModel.IdClient, inputModel.IdFreelancer, inputModel.TotalCost);
 
-            _dbContex.Projects.Add(project);
-            _dbContex.SaveChanges();
+            _dbContext.Projects.Add(project);
+            _dbContext.SaveChanges();
 
             return project.Id;
         }
@@ -35,29 +38,29 @@ namespace DevFreelas.Application.Services.Implementations
         {
             var comment = new ProjectComment(inputModel.Content, inputModel.IdProject, inputModel.IdUser);
 
-            _dbContex.ProjectComments.Add(comment);
-            _dbContex.SaveChanges();
+            _dbContext.ProjectComments.Add(comment);
+            _dbContext.SaveChanges();
         }
 
         public void Delete(int id)
         {
-            var project = _dbContex.Projects.SingleOrDefault(p => p.Id == id);
+            var project = _dbContext.Projects.SingleOrDefault(p => p.Id == id);
 
             project.Cancel();
-            _dbContex.SaveChanges();
+            _dbContext.SaveChanges();
         }
 
         public void Finish(int id)
         {
-            var project = _dbContex.Projects.SingleOrDefault(p => p.Id == id);
+            var project = _dbContext.Projects.SingleOrDefault(p => p.Id == id);
 
             project.Finish();
-            _dbContex.SaveChanges();
+            _dbContext.SaveChanges();
         }
 
         public List<ProjectViewModel> GetAll(string query)
         {
-            var project = _dbContex.Projects;
+            var project = _dbContext.Projects;
 
             var projectsViewModel = project
                 .Select(p => new ProjectViewModel(p.Id, p.Title, p.CreatedAt))
@@ -68,7 +71,7 @@ namespace DevFreelas.Application.Services.Implementations
 
         public ProjectDetailsViewModel GetById(int id)
         {
-            var project = _dbContex.Projects
+            var project = _dbContext.Projects
                 .Include(p => p.Client)
                 .Include(p => p.Freelancer)
                 .SingleOrDefault(p => p.Id == id);
@@ -92,18 +95,18 @@ namespace DevFreelas.Application.Services.Implementations
 
         public void Start(int id)
         {
-            var project = _dbContex.Projects.SingleOrDefault(p => p.Id == id);
+            var project = _dbContext.Projects.SingleOrDefault(p => p.Id == id);
 
             project.Start();
-            _dbContex.SaveChanges();
+            _dbContext.SaveChanges();
         }
 
         public void Update(UpdateProjectInputModel inputModel)
         {
-            var project = _dbContex.Projects.SingleOrDefault(p => p.Id == inputModel.Id);
+            var project = _dbContext.Projects.SingleOrDefault(p => p.Id == inputModel.Id);
 
             project.Update(inputModel.Title, inputModel.Description, inputModel.TotalCost);
-            _dbContex.SaveChanges();
+            _dbContext.SaveChanges();
         }
     }
 }

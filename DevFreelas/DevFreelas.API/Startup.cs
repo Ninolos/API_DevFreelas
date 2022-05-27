@@ -37,7 +37,7 @@ namespace DevFreelas.API
             services.Configure<OpeningTimeOption>(Configuration.GetSection("OpeninTIme"));
 
             var connectionString = Configuration.GetConnectionString("DevFreelasCs");
-            services.AddDbContext<DevFreelasDbContext>(options => options.UseSqlServer(connectionString, b => b.MigrationsAssembly("DevFreelas.API")));
+            services.AddDbContext<DevFreelasDbContext>(options => options.UseSqlServer(connectionString, b => b.MigrationsAssembly("DevFreelas.Infrastructure")));
 
             services.AddScoped<IProjectService, ProjectService>();
 
