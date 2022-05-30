@@ -1,4 +1,5 @@
 ﻿using DevFreelas.Application.ViewModels;
+using DevFreelas.Core.Repositories;
 using DevFreelas.Infrastructure.Persistence;
 using MediatR;
 using Microsoft.EntityFrameworkCore;
@@ -13,20 +14,20 @@ namespace DevFreelas.Application.Queries.GetAllProjects
 {
     public class GetAllProjectsQueryHandler : IRequestHandler<GetAllProjectsQuery, List<ProjectViewModel>>
     {
-        private readonly DevFreelasDbContext _dbContext;
+        private readonly IProjectRepository _projectRepository;
 
-        public GetAllProjectsQueryHandler(DevFreelasDbContext dbContext)
+        public GetAllProjectsQueryHandler(IProjectRepository projectRepository)
         {
-            _dbContext = dbContext;
+            _projectRepository = projectRepository;
         }
 
         public async Task<List<ProjectViewModel>> Handle(GetAllProjectsQuery request, CancellationToken cancellationToken)
         {
-            var project = _dbContext.Projects;
+            var project = await _projectRepository.GetAll();
 
-            var projectsViewModel = await project
+            var projectsViewModel = project
                 .Select(p => new ProjectViewModel(p.Id, p.Title, p.CreatedAt))
-                .ToListAsync();
+                .ToList();
 
             return projectsViewModel;
         }

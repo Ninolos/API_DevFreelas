@@ -1,4 +1,4 @@
-﻿using DevFreelas.Core.Entities;
+﻿using DevFreelas.Core.DTOs;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -7,8 +7,8 @@ using System.Threading.Tasks;
 
 namespace DevFreelas.Core.Repositories
 {
-    public interface IProjectRepository
+    public interface ISkillRepository
     {
-        Task<List<Projects>> GetAll();
+        Task<List<SkillDTO>> GetAll();
     }
 }
