@@ -1,6 +1,7 @@
 ﻿using Dapper;
 using DevFreelas.Application.ViewModels;
 using DevFreelas.Core.DTOs;
+using DevFreelas.Core.Repositories;
 using DevFreelas.Infrastructure.Persistence;
 using DevFreelas.Infrastructure.Persistence.Repositories;
 using MediatR;
@@ -17,9 +18,9 @@ namespace DevFreelas.Application.Queries.GetAllSkills
 {
     public class GetAllSkillsQueryHandler : IRequestHandler<GetAllSkillsQuery, List<SkillDTO>>
     {
-        private readonly SkillRepository _skillRepository;
+        private readonly ISkillRepository _skillRepository;
 
-        public GetAllSkillsQueryHandler(SkillRepository skillRepository)
+        public GetAllSkillsQueryHandler(ISkillRepository skillRepository)
         {
             _skillRepository = skillRepository;
         }
