@@ -1,7 +1,8 @@
 using DevFreelas.API.Models;
 using DevFreelas.Application.Commands.CreateProjects;
-
+using DevFreelas.Core.Repositories;
 using DevFreelas.Infrastructure.Persistence;
+using DevFreelas.Infrastructure.Persistence.Repositories;
 using MediatR;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
@@ -37,7 +38,11 @@ namespace DevFreelas.API
 
             var connectionString = Configuration.GetConnectionString("DevFreelasCs");
             services.AddDbContext<DevFreelasDbContext>(options => options.UseSqlServer(connectionString, b => b.MigrationsAssembly("DevFreelas.Infrastructure")));
-                        
+
+            services.AddScoped<IProjectRepository, ProjectRepository>();
+            services.AddScoped<IUserRepository, UserRepository>();
+            services.AddScoped<ISkillRepository, SkillRepository>();
+
             services.AddControllers();
 
             services.AddMediatR(typeof(CreateProjectCommand));

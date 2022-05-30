@@ -20,7 +20,7 @@ namespace DevFreelas.Infrastructure.Persistence.Repositories
             _connectionString = configuration.GetConnectionString("DevFreelasCs");
         }
 
-        public async Task<List<SkillDTO>> GetAll()
+        public async Task<List<SkillDTO>> GetAllAsync()
         {
             using (var sqlConnection = new SqlConnection(_connectionString))
             {
