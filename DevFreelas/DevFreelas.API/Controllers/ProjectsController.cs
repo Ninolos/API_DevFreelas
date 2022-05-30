@@ -58,9 +58,14 @@ namespace DevFreelas.API.Controllers
         [HttpPost]
         public async Task<IActionResult> Post([FromBody] CreateProjectCommand command)
         {
-            if(command.Title.Length > 50)
+            if (!ModelState.IsValid)
             {
-                return BadRequest();
+                var message = ModelState
+                    .SelectMany(ms => ms.Value.Errors)
+                    .Select(e => e.ErrorMessage)
+                    .ToList();
+
+                return BadRequest(message);
             }
 
             //var id =_projectService.Create(inputModel);
