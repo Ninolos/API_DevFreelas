@@ -3,6 +3,8 @@ using DevFreelas.API.Models;
 using DevFreelas.Application.Commands.CreateProjects;
 using DevFreelas.Application.Validators;
 using DevFreelas.Core.Repositories;
+using DevFreelas.Core.Services;
+using DevFreelas.Infrastructure.AuthService;
 using DevFreelas.Infrastructure.Persistence;
 using DevFreelas.Infrastructure.Persistence.Repositories;
 using FluentValidation.AspNetCore;
@@ -45,6 +47,8 @@ namespace DevFreelas.API
             services.AddScoped<IProjectRepository, ProjectRepository>();
             services.AddScoped<IUserRepository, UserRepository>();
             services.AddScoped<ISkillRepository, SkillRepository>();
+            services.AddScoped<IAuthService, AuthService>();
+
 
             services.AddControllers(options => options.Filters.Add(typeof(ValidationFilter))).AddFluentValidation(FluentValidation => FluentValidation.RegisterValidatorsFromAssemblyContaining<CreateProjectCommandValidator>());
 
