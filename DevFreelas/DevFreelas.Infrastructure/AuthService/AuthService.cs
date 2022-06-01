@@ -67,5 +67,6 @@ namespace DevFreelas.Infrastructure.AuthService
 
             return stringToken;
         }
+                
     }
 }

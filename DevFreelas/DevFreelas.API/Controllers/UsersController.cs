@@ -1,5 +1,6 @@
 ﻿using DevFreelas.API.Models;
 using DevFreelas.Application.Commands.CreateUser;
+using DevFreelas.Application.Commands.LoginUser;
 using DevFreelas.Application.InputModels;
 using DevFreelas.Application.Queries.GetUsers;
 
@@ -44,10 +45,16 @@ namespace DevFreelas.API.Controllers
             return CreatedAtAction(nameof(GetById), new { id = id }, command);
         }
 
-        [HttpPut("{id}/login")]
-        public IActionResult Login(int id, [FromBody] LoginModel login)
+        [HttpPut("login")]
+        public async Task<IActionResult> Login([FromBody] LoginUserCommand command)
         {
-            return NoContent();
+            var loginUserViewModel = await _mediator.Send(command);
+
+            if(loginUserViewModel == null)
+            {
+                return BadRequest();
+            }
+            return Ok(loginUserViewModel);
         }
     }
 }
